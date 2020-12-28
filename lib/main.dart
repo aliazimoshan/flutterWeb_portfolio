@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           SizedBox(width: 15.0),
           Container(
-            width: MediaQuery.of(context).size.width / 3,
+            width: MediaQuery.of(context).size.width / 6,
             child: ListView(
                 children: allSlides.map((element) {
               return getTitles(element);
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           SizedBox(width: 10.0),
           Container(
-            width: (MediaQuery.of(context).size.width / 3) * 2 - 25.0,
+            width: (MediaQuery.of(context).size.width / 6) * 5 - 25.0,
             child: ListView(
               controller: _scrollController,
               children: allSlides.map((element) {
@@ -147,12 +147,21 @@ class _MyHomePageState extends State<MyHomePage> {
       },
       child: Padding(
         padding: EdgeInsets.only(top: 15.0),
-        child: Text(
-          slide['slideName'],
-          style: TextStyle(
-            fontWeight: slide['selected'] ? FontWeight.bold : FontWeight.normal,
-            fontSize: 17.0,
+        child: AnimatedCrossFade(
+          firstChild: Container(
+            width: double.maxFinite,
+            height: 20,
+            color: Colors.blue,
           ),
+          duration: Duration(seconds: 1),
+          secondChild: Container(
+            width: double.maxFinite,
+            height: 20,
+            color: Colors.red,
+          ),
+          crossFadeState: slide['selected']
+              ? CrossFadeState.showFirst
+              : CrossFadeState.showSecond,
         ),
       ),
     );

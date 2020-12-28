@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fade_in_scroll">
+    package="com.example.AliAzimoshan">
    <application
-        android:label="fade_in_scroll"
+        android:label="AliAzimoshan"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

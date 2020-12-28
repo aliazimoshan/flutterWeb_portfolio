@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(fade_in_scroll LANGUAGES CXX)
+project(AliAzimoshan LANGUAGES CXX)
 
-set(BINARY_NAME "fade_in_scroll")
+set(BINARY_NAME "AliAzimoshan")
 
 cmake_policy(SET CMP0063 NEW)
 

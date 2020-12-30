@@ -21,24 +21,34 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ScrollController _scrollController;
+  var selectedSlide;
+
+  imageBox() {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+            'assets/images/image-1.jpg',
+          ),
+        ),
+      ),
+    );
+  }
 
   List allSlides = [
-    {'slideName': 'slideOne', 'selected': false},
-    {'slideName': 'slideTwo', 'selected': false},
-    {'slideName': 'slideThree', 'selected': false},
-    {'slideName': 'slideFour', 'selected': false},
-    {'slideName': 'slideFive', 'selected': false},
-    {'slideName': 'slideSix', 'selected': false},
-    {'slideName': 'slideSeven', 'selected': false},
-    {'slideName': 'slideEight', 'selected': false},
-    {'slideName': 'slideNine', 'selected': false}
+    {'widget': Widget, 'selected': false},
+    {'widget': Widget, 'selected': false},
+    {'widget': Widget, 'selected': false},
+    {'widget': Widget, 'selected': false},
+    {'widget': Widget, 'selected': false},
+    {'widget': Widget, 'selected': false},
+    {'widget': Widget, 'selected': false},
+    {'widget': Widget, 'selected': false},
+    {'widget': Widget, 'selected': false}
   ];
-
-  var selectedSlide;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(changeSelector);
@@ -56,10 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
     var scrollValue = _scrollController.offset.round();
     var slideValue = (scrollValue / divisor).round();
 
-    var currentSlide = allSlides.indexWhere((slide) => slide['selected']);
+    // var currentSlide = allSlides.indexWhere((slide) => slide['selected']);
 
     setState(() {
-      allSlides[currentSlide]['selected'] = false;
+      // allSlides[currentSlide]['selected'] = false;
       selectedSlide = allSlides[slideValue];
       selectedSlide['selected'] = true;
     });
@@ -68,23 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Ali Azimoshan'),
-        centerTitle: true,
-      ),
       body: Row(
         children: <Widget>[
-          SizedBox(width: 15.0),
           Container(
-            width: MediaQuery.of(context).size.width / 6,
-            child: ListView(
-                children: allSlides.map((element) {
-              return getTitles(element);
-            }).toList()),
-          ),
-          SizedBox(width: 10.0),
-          Container(
-            width: (MediaQuery.of(context).size.width / 6) * 5 - 25.0,
+            width: MediaQuery.of(context).size.width,
             child: ListView(
               controller: _scrollController,
               children: allSlides.map((element) {
@@ -99,70 +96,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget getCards(slide) {
     return Padding(
-      padding: EdgeInsets.only(
-        top: 15.0,
-        right: 10.0,
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.black,
-            style: BorderStyle.solid,
-            width: 1.0,
-          ),
+      padding: EdgeInsets.all(0),
+      child: AnimatedCrossFade(
+        firstChild: Container(
+          margin: EdgeInsets.all(15),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: Colors.white,
+          child: imageBox(),
         ),
-        height: 200.0,
-        width: 125.0,
-        child: Center(
-          child: Text(
-            slide['slideName'],
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+        duration: Duration(seconds: 1),
+        secondChild: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: Colors.transparent,
         ),
-      ),
-    );
-  }
-
-  scrollToSlide(inputSlide) {
-    var whichSlide = allSlides
-        .indexWhere((slide) => slide['slideName'] == inputSlide['slideName']);
-
-    var maxScrollValue = _scrollController.position.maxScrollExtent;
-
-    var divisor = (maxScrollValue / allSlides.length) + 20;
-
-    var scrollToValue = whichSlide * divisor;
-
-    _scrollController.animateTo(
-      scrollToValue,
-      curve: Curves.easeIn,
-      duration: Duration(milliseconds: 1000),
-    );
-  }
-
-  Widget getTitles(slide) {
-    return InkWell(
-      onTap: () {
-        scrollToSlide(slide);
-      },
-      child: Padding(
-        padding: EdgeInsets.only(top: 15.0),
-        child: AnimatedCrossFade(
-          firstChild: Container(
-            width: double.maxFinite,
-            height: 20,
-            color: Colors.blue,
-          ),
-          duration: Duration(seconds: 1),
-          secondChild: Container(
-            width: double.maxFinite,
-            height: 20,
-            color: Colors.red,
-          ),
-          crossFadeState: slide['selected']
-              ? CrossFadeState.showFirst
-              : CrossFadeState.showSecond,
-        ),
+        crossFadeState: slide['selected']
+            ? CrossFadeState.showFirst
+            : CrossFadeState.showSecond,
       ),
     );
   }

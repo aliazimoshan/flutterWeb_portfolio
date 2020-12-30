@@ -25,12 +25,45 @@ class _MyHomePageState extends State<MyHomePage> {
 
   imageBox() {
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            'assets/images/image-1.jpg',
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width / 3,
+            height: MediaQuery.of(context).size.height / 3,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  'assets/images/image-1.jpg',
+                ),
+              ),
+            ),
           ),
-        ),
+          Container(
+            width: MediaQuery.of(context).size.width / 3,
+            height: MediaQuery.of(context).size.height / 3,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  'assets/images/image-2.jpg',
+                ),
+              ),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width / 3,
+            height: MediaQuery.of(context).size.height / 3,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  'assets/images/image-3.jpg',
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -98,13 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Padding(
       padding: EdgeInsets.all(0),
       child: AnimatedCrossFade(
-        firstChild: Container(
-          margin: EdgeInsets.all(15),
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: Colors.white,
-          child: imageBox(),
-        ),
+        firstChild: imageBox(),
         duration: Duration(seconds: 1),
         secondChild: Container(
           width: MediaQuery.of(context).size.width,
